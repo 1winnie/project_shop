@@ -1,28 +1,26 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+      <Header></Header>
+      <router-view></router-view>
+      <!-- 在Home、search显示的，在登录、注册隐藏 -->
+      <Footer v-show="$route.meta.showFooter"></Footer>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Header from './components/Header'
+import Footer from './components/Footer'
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  name:'App',
+  components:{Header,Footer},
+  mounted(){
+    // 所有的组件当中，app是最先执行的，而且mouted只会执行一次
+    // 通知Vuex发请求，获取数据，存储于仓库当中
+    this.$store.dispatch('categoryList')
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
